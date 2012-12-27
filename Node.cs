@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace RT.Util
 {
     /// <summary>Base class for nodes in a graph on which breadth-first search is performed by <see cref="Dijkstra.Run"/>.</summary>
+    /// <typeparam name="TWeight">Type of the weight (or length or any other quantity to be minimized) of each edge between nodes.</typeparam>
     /// <typeparam name="TLabel">Type that can be used to identify edges connecting nodes.</typeparam>
     public abstract class Node<TWeight, TLabel> : IEquatable<Node<TWeight, TLabel>>
     {

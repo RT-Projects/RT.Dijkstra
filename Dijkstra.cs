@@ -10,9 +10,14 @@ namespace RT.Util
     public class Dijkstra
     {
         /// <summary>Runs Dijkstra’s Algorithm (a generalization of breadth-first search) on an arbitrary graph.</summary>
-        /// <typeparam name="TWeight">Type of the weight of each edge.</typeparam>
+        /// <typeparam name="TWeight">Type of the weight (or length or any other quantity to be minimized) of each edge between nodes.</typeparam>
+        /// <typeparam name="TLabel">Type that is used to identify edges.</typeparam>
         /// <param name="startNode">Node to start the search at.</param>
-        /// <returns>The sequence of labels on the edges connecting the start node to the first node encountered that has <see cref="Node{TLabel}.IsFinal"/> set to true.</returns>
+        /// <param name="initialWeight">The initial weight to start with (usually zero).</param>
+        /// <param name="add">Function to add two weights together.</param>
+        /// <param name="totalWeight">Receives the total weight of the path returned.</param>
+        /// <returns>The sequence of labels on the edges connecting the start node to the first node encountered that has <see cref="Node{TWeight,TLabel}.IsFinal"/> set to true.</returns>
+        /// <exception cref="InvalidOperationException">There is no path from the <paramref name="startNode"/> to any final node.</exception>
         public static IEnumerable<TLabel> Run<TWeight, TLabel>(Node<TWeight, TLabel> startNode, TWeight initialWeight, Func<TWeight, TWeight, TWeight> add, out TWeight totalWeight) where TWeight : IComparable<TWeight>
         {
             // Start with a priority queue containing just the start node
