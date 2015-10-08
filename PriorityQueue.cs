@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RT.Util
+namespace RT.Dijkstra
 {
     sealed class PriorityQueue<TItem, TWeight> where TWeight : IComparable<TWeight>
     {

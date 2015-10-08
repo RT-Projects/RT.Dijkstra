@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RT.Util
+namespace RT.Dijkstra
 {
     /// <summary>Encapsulates an edge in the graph for Dijkstra’s Algorithm, containing a weight, a label and a target node.</summary>
     /// <typeparam name="TWeight">Type of the weight (or length or any other quantity to be minimized) of each edge between nodes.</typeparam>

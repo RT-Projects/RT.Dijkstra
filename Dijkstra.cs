@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RT.Util
+namespace RT.Dijkstra
 {
     /// <summary>Provides a method to run Dijkstra’s Algorithm (a generalization of breadth-first search) on an arbitrary directed graph with positive edge weights.</summary>
-    public static class Dijkstra
+    public static class DijkstrasAlgorithm
     {
         /// <summary>Runs Dijkstra’s Algorithm (a generalization of breadth-first search) on an arbitrary graph.</summary>
         /// <typeparam name="TWeight">Type of the weight (or length or any other quantity to be minimized) of each edge between nodes.</typeparam>

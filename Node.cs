@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RT.Util
+namespace RT.Dijkstra
 {
     /// <summary>Base class for nodes in a graph on which breadth-first search is performed by <see cref="Dijkstra.Run"/>.</summary>
     /// <typeparam name="TWeight">Type of the weight (or length or any other quantity to be minimized) of each edge between nodes.</typeparam>
