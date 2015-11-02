@@ -1,4 +1,6 @@
-﻿This class allows you to find the shortest path through any kind of graph in which the edges have weights.
+﻿Full documentation: http://docs.timwi.de/RT.Dijkstra
+
+This class allows you to find the shortest path through any kind of graph in which the edges have weights.
 
 Usage example
 =

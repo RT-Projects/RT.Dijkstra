@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace RT.Dijkstra
 {
     /// <summary>
-    ///     Base class for nodes in a graph on which breadth-first search is performed by <see
-    ///     cref="DijkstrasAlgorithm.Run"/>.</summary>
+    ///     Base class for nodes in a graph on which Dijkstra’s Algorithm is run using <see cref="DijkstrasAlgorithm.Run"/>.</summary>
     /// <typeparam name="TWeight">
     ///     Type of the weight (or length or any other quantity to be minimized) of each edge between nodes.</typeparam>
     /// <typeparam name="TLabel">
@@ -23,8 +22,7 @@ namespace RT.Dijkstra
 
         /// <summary>
         ///     When overridden in a derived class, determines whether this node is “final”. The final nodes are the nodes the
-        ///     breadth-first search is looking for. The first such node encountered in the search ends the search with
-        ///     success.</summary>
+        ///     algorithm is looking for. The first such node encountered in the search ends the search with success.</summary>
         public abstract bool IsFinal { get; }
 
         /// <summary>
