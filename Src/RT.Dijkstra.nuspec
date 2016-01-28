@@ -3,7 +3,7 @@
   <metadata>
     <id>RT.Dijkstra</id>
     <version>$version$</version>
-    <title>RT.Util</title>
+    <title>RT.Dijkstra</title>
     <authors>Timwi</authors>
     <owners>Timwi,rstarkov</owners>
     <projectUrl>https://github.com/RT-Projects/RT.Dijkstra/</projectUrl>
