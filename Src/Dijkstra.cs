@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RT.Dijkstra
 {
@@ -33,9 +30,8 @@ namespace RT.Dijkstra
 
             while (q.Count > 0)
             {
-                Node<TWeight, TLabel> node;
-                TWeight weight;
-                q.Extract(out node, out weight);
+                q.Extract(out var node, out var weight);
+                already.Add(node);
 
                 if (node.IsFinal)
                 {
@@ -57,7 +53,7 @@ namespace RT.Dijkstra
                 // Compute all the outgoing edges from this node and put the target nodes into the priority queue
                 foreach (var edge in node.Edges)
                 {
-                    if (already.Add(edge.Node))
+                    if (!already.Contains(edge.Node))
                     {
                         var newWeight = add(weight, edge.Weight);
                         q.Add(edge.Node, newWeight);

@@ -37,5 +37,11 @@ namespace RT.Dijkstra
             Label = label;
             Node = node;
         }
+
+        /// <summary>Returns a string representation of this object.</summary>
+        public override string ToString()
+        {
+            return $"{Label} ({Weight})";
+        }
     }
 }
