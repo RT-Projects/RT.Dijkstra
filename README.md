@@ -1,6 +1,8 @@
-﻿Full documentation: http://docs.timwi.de/RT.Dijkstra
+Full documentation: http://docs.timwi.de/RT.Dijkstra
 
 This class allows you to find the shortest path through any kind of graph in which the edges have weights.
+
+[![Build status](https://ci.appveyor.com/api/projects/status/5qu67i941uxjlamw?svg=true)](https://ci.appveyor.com/project/rstarkov/rt-dijkstra)
 
 Usage example
 =
