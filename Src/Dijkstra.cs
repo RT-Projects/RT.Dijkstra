@@ -68,7 +68,15 @@ namespace RT.Dijkstra
             }
 
             // There is no path from the start node to any final node.
-            throw new InvalidOperationException("There is no path from the start node to any final node.");
+            throw new DijkstraNoSolutionException<TWeight, TLabel>($"There is no path from the start node to any final node. {already.Count} nodes were visited.", already);
         }
+    }
+
+    public class DijkstraNoSolutionException<TWeight, TLabel> : Exception
+    {
+        public HashSet<Node<TWeight, TLabel>> HashSet { get; private set; }
+        public DijkstraNoSolutionException() { }
+        public DijkstraNoSolutionException(string message) : base(message) { }
+        public DijkstraNoSolutionException(string message, HashSet<Node<TWeight, TLabel>> hashSet) : base(message) { HashSet = hashSet; }
     }
 }
