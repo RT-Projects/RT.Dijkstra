@@ -3,18 +3,30 @@ using System.Collections.Generic;
 
 namespace RT.Dijkstra
 {
-    /// <summary>Provides a method to run Dijkstra’s Algorithm (a generalization of breadth-first search) on an arbitrary directed graph with positive edge weights.</summary>
+    /// <summary>
+    ///     Provides a method to run Dijkstra’s Algorithm (a generalization of breadth-first search) on an arbitrary directed
+    ///     graph with positive edge weights.</summary>
     public static class DijkstrasAlgorithm
     {
-        /// <summary>Runs Dijkstra’s Algorithm (a generalization of breadth-first search) on an arbitrary graph.</summary>
-        /// <typeparam name="TWeight">Type of the weight (or length or any other quantity to be minimized) of each edge between nodes.</typeparam>
-        /// <typeparam name="TLabel">Type that is used to identify edges.</typeparam>
-        /// <param name="startNode">Node to start the search at.</param>
-        /// <param name="initialWeight">The initial weight to start with (usually zero).</param>
-        /// <param name="add">Function to add two weights together.</param>
-        /// <param name="totalWeight">Receives the total weight of the path returned.</param>
-        /// <returns>The sequence of labels on the edges connecting the start node to the first node encountered that has <see cref="Node{TWeight,TLabel}.IsFinal"/> set to true.</returns>
-        /// <exception cref="InvalidOperationException">There is no path from the <paramref name="startNode"/> to any final node.</exception>
+        /// <summary>
+        ///     Runs Dijkstra’s Algorithm (a generalization of breadth-first search) on an arbitrary graph.</summary>
+        /// <typeparam name="TWeight">
+        ///     Type of the weight (or length or any other quantity to be minimized) of each edge between nodes.</typeparam>
+        /// <typeparam name="TLabel">
+        ///     Type that is used to identify edges.</typeparam>
+        /// <param name="startNode">
+        ///     Node to start the search at.</param>
+        /// <param name="initialWeight">
+        ///     The initial weight to start with (usually zero).</param>
+        /// <param name="add">
+        ///     Function to add two weights together.</param>
+        /// <param name="totalWeight">
+        ///     Receives the total weight of the path returned.</param>
+        /// <returns>
+        ///     The sequence of labels on the edges connecting the start node to the first node encountered that has <see
+        ///     cref="Node{TWeight,TLabel}.IsFinal"/> set to true.</returns>
+        /// <exception cref="InvalidOperationException">
+        ///     There is no path from the <paramref name="startNode"/> to any final node.</exception>
         public static IEnumerable<TLabel> Run<TWeight, TLabel>(Node<TWeight, TLabel> startNode, TWeight initialWeight, Func<TWeight, TWeight, TWeight> add, out TWeight totalWeight) where TWeight : IComparable<TWeight>
         {
             // Start with a priority queue containing just the start node
@@ -62,7 +74,8 @@ namespace RT.Dijkstra
                         // (Note that this kinda abuses the Edge<,> class to store slightly different information than normally:
                         // instead of the node the edge is pointing to, we store the node the edge is *coming from*; and
                         // instead of the weight of a single edge, we store the total weight from the start node.)
-                        parentEdges[edge.Node] = new Edge<TWeight, TLabel>(newWeight, edge.Label, node);
+                        if (!parentEdges.ContainsKey(edge.Node) || parentEdges[edge.Node].Weight.CompareTo(newWeight) > 0)
+                            parentEdges[edge.Node] = new Edge<TWeight, TLabel>(newWeight, edge.Label, node);
                     }
                 }
             }
@@ -72,11 +85,22 @@ namespace RT.Dijkstra
         }
     }
 
+    /// <summary>
+    ///     Indicates that no solution could be found when running <see cref="DijkstrasAlgorithm.Run{TWeight,
+    ///     TLabel}(Node{TWeight, TLabel}, TWeight, Func{TWeight, TWeight, TWeight}, out TWeight)"/>.</summary>
+    /// <typeparam name="TWeight">
+    ///     Type of the weight (or length or any other quantity to be minimized) of each edge between nodes.</typeparam>
+    /// <typeparam name="TLabel">
+    ///     Type that is used to identify edges.</typeparam>
     public class DijkstraNoSolutionException<TWeight, TLabel> : Exception
     {
-        public HashSet<Node<TWeight, TLabel>> HashSet { get; private set; }
+        /// <summary>Contains the nodes that were visited.</summary>
+        public HashSet<Node<TWeight, TLabel>> VisitedNodes { get; private set; }
+        /// <summary>Construtor.</summary>
         public DijkstraNoSolutionException() { }
+        /// <summary>Construtor.</summary>
         public DijkstraNoSolutionException(string message) : base(message) { }
-        public DijkstraNoSolutionException(string message, HashSet<Node<TWeight, TLabel>> hashSet) : base(message) { HashSet = hashSet; }
+        /// <summary>Construtor.</summary>
+        public DijkstraNoSolutionException(string message, HashSet<Node<TWeight, TLabel>> hashSet) : base(message) { VisitedNodes = hashSet; }
     }
 }
