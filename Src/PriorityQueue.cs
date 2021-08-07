@@ -2,7 +2,7 @@
 
 namespace RT.Dijkstra
 {
-    sealed class PriorityQueue<TItem, TWeight> where TWeight : IComparable<TWeight>
+    public sealed class PriorityQueue<TItem, TWeight> where TWeight : IComparable<TWeight>
     {
         private TItem[] _elements;
         private TWeight[] _weights;
