@@ -43,7 +43,8 @@ namespace RT.Dijkstra
             while (q.Count > 0)
             {
                 q.Extract(out var node, out var weight);
-                already.Add(node);
+                if (!already.Add(node))
+                    continue;
 
                 if (node.IsFinal)
                 {
@@ -65,18 +66,15 @@ namespace RT.Dijkstra
                 // Compute all the outgoing edges from this node and put the target nodes into the priority queue
                 foreach (var edge in node.Edges)
                 {
-                    if (!already.Contains(edge.Node))
-                    {
-                        var newWeight = add(weight, edge.Weight);
-                        q.Add(edge.Node, newWeight);
+                    var newWeight = add(weight, edge.Weight);
+                    q.Add(edge.Node, newWeight);
 
-                        // Remember the node we came from by putting it in the ‘parentEdges’ dictionary.
-                        // (Note that this kinda abuses the Edge<,> class to store slightly different information than normally:
-                        // instead of the node the edge is pointing to, we store the node the edge is *coming from*; and
-                        // instead of the weight of a single edge, we store the total weight from the start node.)
-                        if (!parentEdges.ContainsKey(edge.Node) || parentEdges[edge.Node].Weight.CompareTo(newWeight) > 0)
-                            parentEdges[edge.Node] = new Edge<TWeight, TLabel>(newWeight, edge.Label, node);
-                    }
+                    // Remember the node we came from by putting it in the ‘parentEdges’ dictionary.
+                    // (Note that this kinda abuses the Edge<,> class to store slightly different information than normally:
+                    // instead of the node the edge is pointing to, we store the node the edge is *coming from*; and
+                    // instead of the weight of a single edge, we store the total weight from the start node.)
+                    if (!parentEdges.ContainsKey(edge.Node) || parentEdges[edge.Node].Weight.CompareTo(newWeight) > 0)
+                        parentEdges[edge.Node] = new Edge<TWeight, TLabel>(newWeight, edge.Label, node);
                 }
             }
 
