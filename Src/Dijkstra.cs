@@ -27,7 +27,7 @@ namespace RT.Dijkstra
         ///     cref="Node{TWeight,TLabel}.IsFinal"/> set to true.</returns>
         /// <exception cref="InvalidOperationException">
         ///     There is no path from the <paramref name="startNode"/> to any final node.</exception>
-        public static IEnumerable<TLabel> Run<TWeight, TLabel>(Node<TWeight, TLabel> startNode, TWeight initialWeight, Func<TWeight, TWeight, TWeight> add, out TWeight totalWeight) where TWeight : IComparable<TWeight>
+        public static IEnumerable<Step<TWeight, TLabel>> Run<TWeight, TLabel>(Node<TWeight, TLabel> startNode, TWeight initialWeight, Func<TWeight, TWeight, TWeight> add, out TWeight totalWeight) where TWeight : IComparable<TWeight>
         {
             // Start with a priority queue containing just the start node
             var q = new PriorityQueue<Node<TWeight, TLabel>, TWeight>();
@@ -49,11 +49,11 @@ namespace RT.Dijkstra
                 if (node.IsFinal)
                 {
                     // We’ve found a final node. Reconstruct the path back to the start node
-                    var sequence = new List<TLabel>();
+                    var sequence = new List<Step<TWeight, TLabel>> { new Step<TWeight, TLabel>(node, default) };
                     while (!node.Equals(startNode))
                     {
                         var parentEdge = parentEdges[node];
-                        sequence.Add(parentEdge.Label);
+                        sequence.Add(new Step<TWeight, TLabel>(parentEdge.Node, parentEdge.Label));
                         node = parentEdge.Node;
                     }
 
@@ -81,24 +81,5 @@ namespace RT.Dijkstra
             // There is no path from the start node to any final node.
             throw new DijkstraNoSolutionException<TWeight, TLabel>($"There is no path from the start node to any final node. {already.Count} nodes were visited.", already);
         }
-    }
-
-    /// <summary>
-    ///     Indicates that no solution could be found when running <see cref="DijkstrasAlgorithm.Run{TWeight,
-    ///     TLabel}(Node{TWeight, TLabel}, TWeight, Func{TWeight, TWeight, TWeight}, out TWeight)"/>.</summary>
-    /// <typeparam name="TWeight">
-    ///     Type of the weight (or length or any other quantity to be minimized) of each edge between nodes.</typeparam>
-    /// <typeparam name="TLabel">
-    ///     Type that is used to identify edges.</typeparam>
-    public class DijkstraNoSolutionException<TWeight, TLabel> : Exception
-    {
-        /// <summary>Contains the nodes that were visited.</summary>
-        public HashSet<Node<TWeight, TLabel>> VisitedNodes { get; private set; }
-        /// <summary>Construtor.</summary>
-        public DijkstraNoSolutionException() { }
-        /// <summary>Construtor.</summary>
-        public DijkstraNoSolutionException(string message) : base(message) { }
-        /// <summary>Construtor.</summary>
-        public DijkstraNoSolutionException(string message, HashSet<Node<TWeight, TLabel>> hashSet) : base(message) { VisitedNodes = hashSet; }
     }
 }
