@@ -49,7 +49,7 @@ namespace RT.Dijkstra
                 if (node.IsFinal)
                 {
                     // We’ve found a final node. Reconstruct the path back to the start node
-                    var sequence = new List<Step<TWeight, TLabel>> { new Step<TWeight, TLabel>(node, default) };
+                    var sequence = new List<Step<TWeight, TLabel>> { new Step<TWeight, TLabel>(node, default(TLabel)) };
                     while (!node.Equals(startNode))
                     {
                         var parentEdge = parentEdges[node];
